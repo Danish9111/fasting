@@ -1,5 +1,5 @@
-import 'package:fasting/colors.dart';
-import 'package:fasting/custom_text.dart';
+import 'package:fasting/utils/colors.dart';
+import 'package:fasting/utils/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 

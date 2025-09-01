@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'article_detail_page.dart';
-import 'package:fasting/article_detail_page.dart';
-import 'package:fasting/custom_meal_plan_page.dart';
+import 'package:fasting/screens/article_detail_page.dart';
+import 'package:fasting/screens/custom_meal_plan_page.dart';
 
 class ArticlePage extends StatelessWidget {
   const ArticlePage({super.key});

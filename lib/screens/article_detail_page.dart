@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fasting/article_page.dart';
+import 'package:fasting/screens/article_page.dart';
 
 class ArticleDetailPage extends StatelessWidget {
   const ArticleDetailPage({super.key});

@@ -1,11 +1,11 @@
 // import 'package:fasting/calender.dart';
-import 'package:fasting/colors.dart';
+import 'package:fasting/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fasting/widgets/meal_type_selector.dart';
-import 'package:fasting/custom_text.dart';
+import 'package:fasting/utils/custom_text.dart';
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fasting/custom_calender.dart';
+import 'package:fasting/widgets/custom_calender.dart';
 
 class CustomMealPlanScreen extends StatefulWidget {
   const CustomMealPlanScreen({super.key});

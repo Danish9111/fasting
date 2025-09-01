@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fasting/colors.dart';
+import 'package:fasting/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class NotificationSettingsPage extends StatefulWidget {

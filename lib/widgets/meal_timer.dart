@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:fasting/colors.dart';
-import 'package:fasting/custom_text.dart';
+import 'package:fasting/utils/colors.dart';
+import 'package:fasting/utils/custom_text.dart';
 
 class MealTimer extends StatelessWidget {
   const MealTimer({super.key});

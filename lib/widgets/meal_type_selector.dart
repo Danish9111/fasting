@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fasting/colors.dart';
-import 'package:fasting/custom_text.dart';
+import 'package:fasting/utils/colors.dart';
+import 'package:fasting/utils/custom_text.dart';
 
 class MealTypeSelector extends StatefulWidget {
   const MealTypeSelector({super.key});

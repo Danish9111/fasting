@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fasting/custom_text.dart';
+import 'package:fasting/utils/custom_text.dart';
 // import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:fasting/recipe.dart';
+import 'package:fasting/screens/recipe.dart';
 
 class RecipeListPage extends StatelessWidget {
   const RecipeListPage({super.key});

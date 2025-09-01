@@ -1,7 +1,7 @@
-import 'package:fasting/colors.dart';
+import 'package:fasting/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:fasting/custom_text.dart';
-import 'package:fasting/multi_color_slider.dart';
+import 'package:fasting/utils/custom_text.dart';
+import 'package:fasting/widgets/multi_color_slider.dart';
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog({super.key});

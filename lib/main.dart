@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fasting/set_goals.dart';
-import 'package:fasting/home_page.dart';
-import 'package:fasting/notification.dart';
-import 'package:fasting/recipe_list.dart';
+import 'package:fasting/screens/set_goals.dart';
+import 'package:fasting/screens/home_page.dart';
+import 'package:fasting/screens/notification.dart';
+import 'package:fasting/screens/recipe_list.dart';
 
 void main() {
   runApp(const MyApp());
