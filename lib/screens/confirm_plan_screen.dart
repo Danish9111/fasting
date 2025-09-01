@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:fasting/screens/fasting_plan2.dart';
-import 'package:fasting/screens/recipe_list.dart';
+import 'package:fasting/screens/fasting_plan_screen2.dart';
+import 'package:fasting/screens/recipe_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmPlanPage extends StatefulWidget {

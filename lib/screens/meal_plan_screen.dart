@@ -5,7 +5,7 @@ import 'package:fasting/widgets/meal_card.dart';
 import 'package:fasting/widgets/meal_timer.dart';
 import 'package:fasting/widgets/meal_type_selector.dart';
 import 'package:fasting/utils/custom_text.dart';
-import 'package:fasting/screens/custom_meal_plan_page.dart';
+import 'package:fasting/screens/custom_meal_plan_screen.dart';
 
 class MealPlanScreen extends StatelessWidget {
   const MealPlanScreen({super.key});

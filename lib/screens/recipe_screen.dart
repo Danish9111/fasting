@@ -1,6 +1,6 @@
 import 'package:fasting/utils/colors.dart';
 import 'package:fasting/utils/custom_text.dart';
-import 'package:fasting/screens/feedback.dart';
+import 'package:fasting/widgets/feedback_dialog.dart';
 import 'package:flutter/material.dart';
 
 class RecipeDetailPage extends StatelessWidget {

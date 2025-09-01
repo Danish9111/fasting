@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'set_goals.dart';
+import 'set_goals_screen.dart';
 import 'package:fasting/utils/colors.dart';
-import 'package:fasting/screens/settings_page.dart';
+import 'package:fasting/screens/settings_screen.dart';
 import 'package:fasting/screens/meal_screen.dart';
 import 'package:fasting/screens/meal_plan_screen.dart';
-import 'package:fasting/screens/article_detail_page.dart';
+import 'package:fasting/screens/article_detail_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,6 +1,6 @@
 import 'package:fasting/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:fasting/screens/confirm_plan.dart';
+import 'package:fasting/screens/confirm_plan_screen.dart';
 
 class FastingPlan2Tile {
   final String title;

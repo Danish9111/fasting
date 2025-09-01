@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fasting/screens/confirm_plan.dart';
-import 'package:fasting/screens/fasting_plan2.dart';
+import 'package:fasting/screens/confirm_plan_screen.dart';
+import 'package:fasting/screens/fasting_plan_screen2.dart';
 
 class FastingPlan1 {
   final String title;

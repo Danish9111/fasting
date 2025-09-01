@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fasting/utils/colors.dart';
-import 'package:fasting/screens/fasting_plan1.dart';
+import 'package:fasting/screens/fasting_plan_screen1.dart';
 
 class Goal {
   final String title;

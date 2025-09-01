@@ -1,5 +1,5 @@
 import 'package:fasting/utils/colors.dart';
-import 'package:fasting/screens/notification.dart';
+import 'package:fasting/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
