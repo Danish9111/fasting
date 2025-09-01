@@ -5,7 +5,6 @@ import 'package:fasting/widgets/meal_card.dart';
 import 'package:fasting/widgets/meal_timer.dart';
 import 'package:fasting/widgets/meal_type_selector.dart';
 import 'package:fasting/custom_text.dart';
-import 'package:fasting/progress.dart';
 import 'package:fasting/custom_meal_plan_page.dart';
 
 class MealPlanScreen extends StatelessWidget {
@@ -183,7 +182,11 @@ Widget _buttons(context) {
         ),
 
         // Divider
-        Container(width: 1, height: 30, color: Colors.white),
+        SizedBox(
+          width: 1,
+          height: 30,
+          child: DecoratedBox(decoration: BoxDecoration(color: Colors.white)),
+        ),
 
         // Right Button
         Expanded(

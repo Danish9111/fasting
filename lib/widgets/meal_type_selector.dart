@@ -36,15 +36,13 @@ class _MealTypeSelectorState extends State<MealTypeSelector> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
-                child: Flexible(
-                  child: AppText(
-                    _mealTypes[index],
+                child: AppText(
+                  _mealTypes[index],
 
-                    color: _selectedIndex == index
-                        ? Colors.white
-                        : const Color(0xFF8BC34A),
-                    weight: FontWeight.w500,
-                  ),
+                  color: _selectedIndex == index
+                      ? Colors.white
+                      : const Color(0xFF8BC34A),
+                  weight: FontWeight.w500,
                 ),
               ),
             ),
