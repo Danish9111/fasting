@@ -30,7 +30,6 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
       contentPadding: const EdgeInsets.all(15),
 
       content: SingleChildScrollView(
-        // so it won’t overflow
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,83 +1,22 @@
-// import 'package:fasting/calender.dart';
-import 'package:fasting/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fasting/providers/meal_plan_providers.dart';
+import 'package:fasting/utils/colors.dart';
 import 'package:fasting/widgets/meal_type_selector.dart';
 import 'package:fasting/utils/custom_text.dart';
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fasting/widgets/custom_calender.dart';
 
-class CustomMealPlanScreen extends StatefulWidget {
+class CustomMealPlanScreen extends ConsumerWidget {
   const CustomMealPlanScreen({super.key});
 
   @override
-  State<CustomMealPlanScreen> createState() => _CustomMealPlanScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedMeals = ref.watch(selectedMealsProvider);
+    final carouselIndex = ref.watch(carouselIndexProvider);
+    final listKey = ref.watch(listKeyProvider);
 
-class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
-  final List<Map<String, String>> selectedMeals = [];
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  int _currentCarouselIndex = 0;
-
-  void _addMeal(String imageUrl, String title, String calories) {
-    final exists = selectedMeals.indexWhere((m) => m['title'] == title) != -1;
-    if (exists) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Meal already selected')));
-      return;
-    }
-    final item = {'image': imageUrl, 'title': title, 'calories': calories};
-    selectedMeals.insert(0, item);
-    _listKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-    setState(() {});
-  }
-
-  void _removeMeal(int index) {
-    if (index < 0 || index >= selectedMeals.length) return;
-    final removed = selectedMeals.removeAt(index);
-    _listKey.currentState?.removeItem(
-      index,
-      (context, animation) => SizeTransition(
-        sizeFactor: animation,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 12.0),
-          child: _buildSelectedMealItem(
-            removed['image'],
-            removed['title'],
-            removed['calories'],
-            onDelete: () {},
-          ),
-        ),
-      ),
-      duration: const Duration(milliseconds: 250),
-    );
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Meal removed'),
-        action: SnackBarAction(
-          label: 'UNDO',
-          textColor: Colors.white,
-          onPressed: () {
-            selectedMeals.insert(index, removed);
-            _listKey.currentState?.insertItem(
-              index,
-              duration: const Duration(milliseconds: 300),
-            );
-            setState(() {});
-          },
-        ),
-      ),
-    );
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
@@ -90,82 +29,98 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
           const SizedBox(width: 20),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(
+              left: 16,
+              top: 16,
+              right: 16,
+              bottom: 120,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppText('Add Custom Plan', size: 30, weight: FontWeight.bold),
-                const Spacer(),
-                SizedBox(width: 20),
-                IconButton(
-                  onPressed: () async {
-                    final result = await CustomDateRangePicker.show(context);
-                    if (result != null && result.isNotEmpty) {
-                      debugPrint("Selected range: $result");
-                    }
-                  },
-                  icon: Image.asset(
-                    'assets/icons/calenderEdit.png',
-                    height: 20,
-                  ),
+                Row(
+                  children: [
+                    AppText(
+                      'Add Custom Plan',
+                      size: 30,
+                      weight: FontWeight.bold,
+                    ),
+                    const Spacer(),
+                    SizedBox(width: 20),
+                    IconButton(
+                      onPressed: () async {
+                        final result = await CustomDateRangePicker.show(
+                          context,
+                        );
+                        if (result != null && result.isNotEmpty) {
+                          debugPrint("Selected range: $result");
+                        }
+                      },
+                      icon: Image.asset(
+                        'assets/icons/calenderEdit.png',
+                        height: 20,
+                      ),
+                    ),
+                  ],
                 ),
+                const AppText(
+                  'Build Your ideal weekly meal routine',
+                  color: Colors.black87,
+                ),
+                const SizedBox(height: 10),
+                MealTypeSelector(),
+                const SizedBox(height: 10),
+                // const SizedBox(height: 16),
+                _buildMealOptions(ref, carouselIndex),
+                const SizedBox(height: 10),
+                DailySchedule(),
+                const SizedBox(height: 10),
+                if (selectedMeals.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  const AppText('Selected Meals', weight: FontWeight.bold),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 220,
+                    child: AnimatedList(
+                      key: listKey,
+                      initialItemCount: selectedMeals.length,
+                      padding: const EdgeInsets.only(top: 8),
+                      itemBuilder: (context, index, animation) {
+                        final meal = selectedMeals[index];
+                        return SizeTransition(
+                          sizeFactor: animation,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 12.0),
+                            child: _buildSelectedMealItem(
+                              meal['image'],
+                              meal['title'],
+                              meal['calories'],
+                              onDelete: () => _removeMeal(ref, index),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ],
             ),
-
-            const AppText(
-              'Build Your ideal weekly meal routine',
-              color: Colors.black87,
-            ),
-            const SizedBox(height: 10),
-            MealTypeSelector(),
-            const SizedBox(height: 10),
-            const SizedBox(height: 16),
-            _buildMealOptions(),
-            const SizedBox(height: 10),
-            DailySchedule(),
-            const SizedBox(height: 10),
-
-            if (selectedMeals.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              const AppText('Selected Meals', weight: FontWeight.bold),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 220,
-                child: AnimatedList(
-                  key: _listKey,
-                  initialItemCount: selectedMeals.length,
-                  padding: const EdgeInsets.only(top: 8),
-                  itemBuilder: (context, index, animation) {
-                    final meal = selectedMeals[index];
-                    return SizeTransition(
-                      sizeFactor: animation,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: _buildSelectedMealItem(
-                          meal['image'],
-                          meal['title'],
-                          meal['calories'],
-                          onDelete: () => _removeMeal(index),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-
-            const SizedBox(height: 16),
-            _buildSaveButton(),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: _buildSaveButton(),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildMealOptions() {
+  Widget _buildMealOptions(WidgetRef ref, int carouselIndex) {
     final items = [
       {
         'title': 'Avocado Toast',
@@ -193,7 +148,13 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
       items: items.asMap().entries.map((e) {
         final idx = e.key;
         final data = e.value;
-        return _buildMealCard(data['title']!, data['cal']!, data['img']!, idx);
+        return _buildMealCard(
+          data['title']!,
+          data['cal']!,
+          data['img']!,
+          idx,
+          ref,
+        );
       }).toList(),
       options: CarouselOptions(
         height: 230,
@@ -205,7 +166,7 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
         pauseAutoPlayOnTouch: true,
         initialPage: 0,
         onPageChanged: (index, reason) {
-          setState(() => _currentCarouselIndex = index);
+          ref.read(carouselIndexProvider.notifier).state = index;
         },
       ),
     );
@@ -216,10 +177,12 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
     String calories,
     String imageUrl,
     int index,
+    WidgetRef ref,
   ) {
     return SingleChildScrollView(
       child: Container(
         width: 170,
+        height: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -233,11 +196,14 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: Stack(
                   children: [
-                    // Animate blur: central image is sharp, others are blurred
                     TweenAnimationBuilder<double>(
                       tween: Tween<double>(
-                        begin: _currentCarouselIndex == index ? 0.0 : 6.0,
-                        end: _currentCarouselIndex == index ? 0.0 : 6.0,
+                        begin: ref.watch(carouselIndexProvider) == index
+                            ? 0.0
+                            : 6.0,
+                        end: ref.watch(carouselIndexProvider) == index
+                            ? 0.0
+                            : 6.0,
                       ),
                       duration: const Duration(milliseconds: 300),
                       builder: (context, sigma, child) {
@@ -272,7 +238,7 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
                       AppText(calories, color: Colors.black87),
                       InkWell(
                         onTap: () {
-                          _addMeal(imageUrl, title, calories);
+                          _addMeal(ref, imageUrl, title, calories);
                         },
                         customBorder: const CircleBorder(),
                         child: Container(
@@ -299,21 +265,82 @@ class _CustomMealPlanScreenState extends State<CustomMealPlanScreen> {
       ),
     );
   }
+
+  void _addMeal(WidgetRef ref, String imageUrl, String title, String calories) {
+    final selectedMeals = ref.watch(selectedMealsProvider);
+    final exists = selectedMeals.any((m) => m['title'] == title);
+    if (exists) {
+      ScaffoldMessenger.of(
+        ref.context,
+      ).showSnackBar(SnackBar(content: Text('Meal already selected')));
+      return;
+    }
+    final notifier = ref.read(selectedMealsProvider.notifier);
+    notifier.addMeal(imageUrl, title, calories);
+    ref
+        .read(listKeyProvider)
+        .currentState
+        ?.insertItem(0, duration: const Duration(milliseconds: 300));
+  }
+
+  void _removeMeal(WidgetRef ref, int index) {
+    final notifier = ref.read(selectedMealsProvider.notifier);
+    final listKey = ref.read(listKeyProvider);
+    final removed = notifier.removeMeal(index);
+    if (removed != null) {
+      listKey.currentState?.removeItem(
+        index,
+        (context, animation) => SizeTransition(
+          sizeFactor: animation,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: _buildSelectedMealItem(
+              removed['image'],
+              removed['title'],
+              removed['calories'],
+              onDelete: () {},
+            ),
+          ),
+        ),
+        duration: const Duration(milliseconds: 250),
+      );
+      ref.read(lastRemovedProvider.notifier).state = removed;
+      ref.read(lastRemovedIndexProvider.notifier).state = index;
+      ScaffoldMessenger.of(ref.context).clearSnackBars();
+      ScaffoldMessenger.of(ref.context).showSnackBar(
+        SnackBar(
+          content: const Text('Meal removed'),
+          action: SnackBarAction(
+            label: 'UNDO',
+            textColor: Colors.white,
+            onPressed: () {
+              final lastRemoved = ref.read(lastRemovedProvider);
+              final lastIndex = ref.read(lastRemovedIndexProvider);
+              if (lastRemoved != null && lastIndex != null) {
+                notifier.undoRemove(lastIndex, lastRemoved);
+                listKey.currentState?.insertItem(
+                  lastIndex,
+                  duration: const Duration(milliseconds: 300),
+                );
+                ref.read(lastRemovedProvider.notifier).state = null;
+                ref.read(lastRemovedIndexProvider.notifier).state = null;
+              }
+            },
+          ),
+        ),
+      );
+    }
+  }
 }
 
-class DailySchedule extends StatefulWidget {
+class DailySchedule extends ConsumerWidget {
   const DailySchedule({super.key});
 
   @override
-  State<DailySchedule> createState() => _DailyScheduleState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedDays = ref.watch(selectedDaysProvider);
+    final days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
-class _DailyScheduleState extends State<DailySchedule> {
-  final days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-  final Set<int> selectedDays = {}; // track selected indices
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -335,13 +362,7 @@ class _DailyScheduleState extends State<DailySchedule> {
                     customBorder: const CircleBorder(),
                     splashColor: AppColors.green.withOpacity(.3),
                     onTap: () {
-                      setState(() {
-                        if (isSelected) {
-                          selectedDays.remove(index);
-                        } else {
-                          selectedDays.add(index);
-                        }
-                      });
+                      ref.read(selectedDaysProvider.notifier).toggleDay(index);
                     },
                     child: Container(
                       height: 40,
@@ -421,12 +442,12 @@ Widget _buildSelectedMealItem(
 Widget _buildSaveButton() {
   return Center(
     child: Material(
-      color: AppColors.green, // background here
+      color: AppColors.green,
       borderRadius: BorderRadius.circular(30),
       child: InkWell(
-        borderRadius: BorderRadius.circular(30), // match rounded shape
-        splashColor: Colors.white.withOpacity(.3), // visible now
-        onTap: () {}, // required for splash to trigger
+        borderRadius: BorderRadius.circular(30),
+        splashColor: Colors.white.withOpacity(.3),
+        onTap: () {},
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16),
