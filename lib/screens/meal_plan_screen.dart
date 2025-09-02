@@ -6,6 +6,7 @@ import 'package:fasting/widgets/meal_timer.dart';
 import 'package:fasting/widgets/meal_type_selector.dart';
 import 'package:fasting/utils/custom_text.dart';
 import 'package:fasting/screens/custom_meal_plan_screen.dart';
+import 'package:fasting/screens/chat_screen.dart';
 
 class MealPlanScreen extends StatelessWidget {
   const MealPlanScreen({super.key});
@@ -203,12 +204,10 @@ Widget _buttons(context) {
               ),
               splashColor: Colors.white24,
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const DashboardPage(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatScreen()),
+                );
               },
               child: SizedBox.expand(
                 child: Row(

@@ -35,7 +35,7 @@ class CustomDateRangePicker {
               child: SizedBox(
                 width: 500,
                 child: Padding(
-                  padding: const EdgeInsets.all(20), // 👈 space inside dialog
+                  padding: const EdgeInsets.all(0), // 👈 space inside dialog
                   child: _DateRangePickerContent(),
                 ),
               ),
@@ -72,31 +72,53 @@ class _DateRangePickerContentState extends State<_DateRangePickerContent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Tabs (Daily / Weekly / Monthly)
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                for (var view in ["Daily", "Weekly", "Monthly"])
-                  GestureDetector(
-                    onTap: () => setState(() => _selectedView = view),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        view,
-                        style: TextStyle(
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: _selectedView == view
-                              ? Colors.green
-                              : Colors.grey[600],
+            SizedBox(
+              height: 360,
+              child: Padding(
+                padding: EdgeInsets.only(left: 10, top: 10),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (var view in ["Daily", "Weekly", "Monthly"])
+                      GestureDetector(
+                        onTap: () => setState(() => _selectedView = view),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            view,
+                            style: TextStyle(
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: _selectedView == view
+                                  ? AppColors.green
+                                  : Colors.grey[600],
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-              ],
+                    // SizedBox(height: 125),
+                    // Spacer(),
+
+                    // SizedBox(
+                    //   height: 50,
+                    //   // alignment: Alignment.bottomLeft,
+                    //   child: TextButton(
+                    //     onPressed: () {
+                    //       setState(() => _selectedDates = []);
+                    //     },
+                    //     child: const Text(
+                    //       "Reset",
+                    //       style: TextStyle(color: AppColors.green),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 12),
+            // const SizedBox(height: 12),
 
             // Calendar
             Expanded(
@@ -167,7 +189,7 @@ class _DateRangePickerContentState extends State<_DateRangePickerContent> {
                                       height: 35,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: AppColors.green.withOpacity(0.3),
+                                        color: AppColors.lightGreen,
                                         borderRadius: BorderRadius.horizontal(
                                           left: isStart
                                               ? const Radius.circular(20)
@@ -218,9 +240,6 @@ class _DateRangePickerContentState extends State<_DateRangePickerContent> {
           ],
         ),
 
-        // Reset Button
-        const SizedBox(height: 12),
-
         // Action Buttons
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,23 +256,27 @@ class _DateRangePickerContentState extends State<_DateRangePickerContent> {
                 ),
               ),
             ),
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const AppText('Cancel', color: Colors.grey),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+            // Container(),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const AppText('Cancel', color: Colors.grey),
                   ),
-                  onPressed: () => Navigator.pop(context, _selectedDates),
-                  child: const AppText('Apply', color: Colors.white),
-                ),
-              ],
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context, _selectedDates),
+                    child: const AppText('Apply', color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
