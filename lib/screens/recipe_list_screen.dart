@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:fasting/utils/custom_text.dart';
 // import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fasting/screens/recipe_screen.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
 class RecipeListPage extends StatelessWidget {
   const RecipeListPage({super.key});
@@ -55,14 +57,11 @@ class RecipeListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
+
         title: AppText('Recipe List'),
         centerTitle: true,
         actions: [
@@ -76,122 +75,169 @@ class RecipeListPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            Row(
+      body:
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.black.withOpacity(0.4),
+          //           offset: const Offset(5, 5),
+          //           blurRadius: 5,
+          //           spreadRadius: 10,
+          //           inset: true,
+          //         ),
+          //       ],
+          //       color: Colors.grey.shade100,
+          //       borderRadius: BorderRadius.circular(30.0),
+          //     ),
+          //     height: 100,
+          //     width: 200,
+          //   ),
+          // ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
               children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.18),
-                          offset: const Offset(-4, -4),
-                          blurRadius: 8,
-                          spreadRadius: 0.5,
-                        ),
-                      ],
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Image.asset(
-                            'assets/icons/appSearch.png',
-                            width: 22,
-                            height: 22,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        prefixIconConstraints: const BoxConstraints(
-                          minWidth: 20,
-                          minHeight: 20,
-                        ),
-                        border: OutlineInputBorder(
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        height: 50,
+
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              offset: const Offset(1, 1),
+                              blurRadius: 1,
+                              spreadRadius: 1,
+                              inset: true,
+                            ),
+                          ],
                         ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0,
-                          horizontal: 20,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: Image.asset(
+                                'assets/icons/appSearch.png',
+                                width: 22,
+                                height: 22,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            prefixIconConstraints: const BoxConstraints(
+                              minWidth: 20,
+                              minHeight: 20,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide.none,
+                            ),
+                            // filled: true,
+                            // fillColor: Colors.white,
+                            // contentPadding: const EdgeInsets.symmetric(
+                            //   vertical: 0,
+                            //   horizontal: 20,
+                            // ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 2,
+
+                      child: Container(
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              offset: const Offset(1, 1),
+                              blurRadius: 1,
+                              spreadRadius: 1,
+                              inset: true,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 12),
+                            Icon(
+                              Icons.filter_list,
+                              color: Colors.grey,
+                              size: 22,
+                            ),
+                            const SizedBox(width: 12),
+                            const Expanded(
+                              child: Text(
+                                'Filter',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              offset: const Offset(1, 1),
+                              blurRadius: 1,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Image.asset('assets/icons/save1.png'),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 10),
+                SizedBox(height: 10),
                 Expanded(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.18),
-                          offset: const Offset(-4, -4),
-                          blurRadius: 8,
-                          spreadRadius: 0.5,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 12),
-                        Icon(Icons.filter_list, color: Colors.grey, size: 22),
-                        const SizedBox(width: 12),
-                        const Expanded(
-                          child: Text(
-                            'Filter',
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
+                  child: ListView.builder(
+                    itemCount: recipes.length,
+                    itemBuilder: (context, index) {
+                      final recipe = recipes[index];
+                      return RecipeCard(
+                        name: recipe['name']!,
+                        calories: recipe['calories']!,
+                        time: recipe['time']!,
+                        color: recipe['color']!,
+                        imageUrl: recipe['image']!,
+                      );
+                    },
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: recipes.length,
-                itemBuilder: (context, index) {
-                  final recipe = recipes[index];
-                  return RecipeCard(
-                    name: recipe['name']!,
-                    calories: recipe['calories']!,
-                    time: recipe['time']!,
-                    color: recipe['color']!,
-                    imageUrl: recipe['image']!,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }

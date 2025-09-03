@@ -2,6 +2,7 @@ import 'package:fasting/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fasting/utils/custom_text.dart';
 import 'package:fasting/widgets/multi_color_slider.dart';
+import 'package:fasting/progress.dart';
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog({super.key});
@@ -25,9 +26,11 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      scrollable: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(15),
+      insetPadding: EdgeInsets.all(20),
 
       content: SingleChildScrollView(
         child: Column(
@@ -116,6 +119,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             ),
 
             const SizedBox(height: 8),
+
+            // width: double.infinity,
             MultiColorSlider(
               colors: [color1, color2, color3, color4, color5],
               value: sliderValue,
@@ -130,6 +135,12 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
                       isAnonymous = !isAnonymous;
                       isBoxChecked = !isBoxChecked;
                     });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DashboardPage(),
+                      ),
+                    );
                   },
                   icon: Icon(
                     Icons.check_box,
@@ -158,6 +169,10 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             onPressed: () {
               // handle submit
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DashboardPage()),
+              );
             },
             child: const AppText(
               "Submit Now",

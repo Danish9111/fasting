@@ -124,6 +124,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Image.asset('assets/icons/chatBot.png', height: 20, width: 20),
             const SizedBox(width: 8),
           ],
+
           Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(

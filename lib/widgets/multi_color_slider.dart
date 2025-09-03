@@ -27,13 +27,16 @@ class _MultiColorSliderState extends State<MultiColorSlider> {
         trackHeight: widget.trackHeight,
         thumbColor: Colors.white,
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
-        overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 10),
         activeTrackColor: Colors.transparent,
         inactiveTrackColor: Colors.transparent,
         trackShape: SegmentedTrackShape(colors: widget.colors),
-        thumbSize: WidgetStatePropertyAll(Size(5, 5)),
       ),
-      child: Slider(value: widget.value, onChanged: widget.onChanged),
+      child: Slider(
+        value: widget.value,
+        onChanged: widget.onChanged,
+        divisions: 4,
+      ),
     );
   }
 }
@@ -46,7 +49,7 @@ class SegmentedTrackShape extends SliderTrackShape {
     Offset offset = Offset.zero,
     required SliderThemeData sliderTheme,
     bool isEnabled = true,
-    bool isDiscrete = false,
+    bool isDiscrete = true,
   }) {
     final trackHeight = sliderTheme.trackHeight ?? 2;
     final trackLeft = offset.dx;
